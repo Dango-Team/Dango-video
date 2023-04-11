@@ -22,7 +22,7 @@
     "dev": "run-p -sr shopify:dev",
     "pull": "run-p -sr shopify:pull",
     "shopify:serve": "cd .. && shopify theme serve",
-    "shopify:dev": "cd .. && shopify theme dev --store kurufootwear.myshopify.com",
+    "shopify:dev": "cd .. && shopify theme dev --store dango-video.myshopify.com",
     "shopify:pull": "cd .. && shopify theme pull --development --nodelete"
   },
   "dependencies": {

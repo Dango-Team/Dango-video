@@ -1,0 +1,168 @@
+<section class="max-w-[1440px] mx-auto px-6 py-10 grid grid-cols-2 w-full gap-5">
+
+  {% for block in section.blocks %}
+
+    {% if block.type == "image_block" %}
+
+      <div>
+        {% if block.settings.image != blank %}
+          {%- render 'image', 
+            image: block.settings.image,
+            pictureClassName: "w-full h-full object-cover rounded-[10px]",
+            lazy: true,
+            class: "",
+          -%}    
+        {% endif %}    
+      </div>
+
+    {% endif %}
+
+    {% if block.type == "text_block" %}
+
+      <div class="flex flex-col py-[50px] px-[75px] bg-[#F8F9FA] rounded-[20px]">
+
+        <h2 class="font-semibold text-[40px] leading-[1.25] tracking-[-1.5px] text-black mb-3">
+          {{- block.settings.heading -}}
+        </h2>
+
+        <div class="richtext">
+          {{ block.settings.description }}
+        </div>
+
+        {% if block.settings.show_items == true %}
+          
+          <div class="border border-[#CFCFCF] flex space-x-[25px] p-2.5 mt-[58px]">
+
+            {% for i in (1..2) %}
+
+              {% assign item_image = "item" | append: i | append: '_image' %}
+              {% assign item_number = "item" | append: i | append: '_number' %}
+              {% assign item_title = "item" | append: i | append: '_title' %}
+
+              <div class="flex space-x-2.5">
+
+                <div class="bg-[#F2F5F7] w-[90px] h-[90px] flex flex-col justify-center items-center border border-[#CFCFCF] rounded-[8px]">
+                  {% if block.settings[item_image] != blank %}
+                    {%- render 'image', 
+                      image: block.settings[item_image],
+                      pictureClassName: "w-[50px] h-[50px] object-cover",
+                      lazy: true,
+                    -%}    
+                  {% endif %}
+                </div>
+
+                <div class="flex flex-col">
+
+                  <p class="font-semibold text-[40px] leading-[1.25] tracking-[.15px]">
+                    {{ block.settings[item_number] }}
+                  </p>
+
+                  <p class="font-semibold text-[16px] !leading-[24px]">
+                    {{ block.settings[item_title] }}
+                  </p>
+
+                </div>
+
+              </div>              
+
+            {% endfor %}
+
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    {% endif %}
+
+  {% endfor %}
+
+</section>
+
+{% schema %}
+  {
+    "name": "Test",
+    "tag": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Image block",
+        "type": "image_block",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          }
+        ]
+      },
+      {
+        "name": "Text block",
+        "type": "text_block",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_items",
+            "label": "Show items",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "Item 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "item1_image",
+            "label": "Image"
+          },
+          {
+            "type": "number",
+            "id": "item1_number",
+            "label": "Number"
+          },
+          {
+            "type": "text",
+            "id": "item1_title",
+            "label": "Title"
+          },
+          {
+            "type": "header",
+            "content": "Item 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "item2_image",
+            "label": "Image"
+          },
+          {
+            "type": "number",
+            "id": "item2_number",
+            "label": "Number"
+          },
+          {
+            "type": "text",
+            "id": "item2_title",
+            "label": "Title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Test"
+      }
+    ]
+  }
+{% endschema %}
